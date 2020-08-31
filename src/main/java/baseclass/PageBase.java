@@ -578,7 +578,7 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IO Exception
 	 */
-	public void scrollElementIntoViewAndClick(WebElement element) throws IOException {
+	public void scrollElementIntoViewAndClick(WebDriver driver,WebElement element) throws IOException {
 		scrollElementIntoView(getInstance(), element);
 		explicitWaitForVisibilityOfElement(getInstance(), element);
 		explicitWaitForElementToBeClickable(getInstance(), element);
