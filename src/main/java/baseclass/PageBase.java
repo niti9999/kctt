@@ -3,7 +3,6 @@ package baseclass;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.Matchers.not;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -75,9 +73,8 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void explicitWaitForVisibilityOfElement(WebElement element) throws IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
-				getIntConfigProperties("WaitForElementMaxTimeDuration"));
+	public void explicitWaitForVisibilityOfElement(WebDriver driver, WebElement element) throws IOException {
+		final WebDriverWait wait = new WebDriverWait(driver, getIntConfigProperties("WaitForElementMaxTimeDuration"));
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
@@ -90,9 +87,9 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void explicitWaitForVisibilityOfListOfElement(List<WebElement> elements) throws IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
-				getIntConfigProperties("WaitForElementMaxTimeDuration"));
+	public void explicitWaitForVisibilityOfListOfElement(WebDriver driver, List<WebElement> elements)
+			throws IOException {
+		final WebDriverWait wait = new WebDriverWait(driver, getIntConfigProperties("WaitForElementMaxTimeDuration"));
 		wait.until(ExpectedConditions.visibilityOfAllElements(elements));
 	}
 
@@ -107,10 +104,9 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void explicitWaitForVisibilityOfEitherOfTheElements(WebElement element1, WebElement element2)
-			throws IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
-				getIntConfigProperties("WaitForElementMaxTimeDuration"));
+	public void explicitWaitForVisibilityOfEitherOfTheElements(WebDriver driver, WebElement element1,
+			WebElement element2) throws IOException {
+		final WebDriverWait wait = new WebDriverWait(driver, getIntConfigProperties("WaitForElementMaxTimeDuration"));
 		wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOf(element1),
 				ExpectedConditions.visibilityOf(element2)));
 	}
@@ -128,10 +124,9 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void explicitWaitForVisibilityOfEitherOfTheElements(WebElement element1, WebElement element2,
-			WebElement element3) throws IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
-				getIntConfigProperties("WaitForElementMaxTimeDuration"));
+	public void explicitWaitForVisibilityOfEitherOfTheElements(WebDriver driver, WebElement element1,
+			WebElement element2, WebElement element3) throws IOException {
+		final WebDriverWait wait = new WebDriverWait(driver, getIntConfigProperties("WaitForElementMaxTimeDuration"));
 		wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOf(element1),
 				ExpectedConditions.visibilityOf(element2), ExpectedConditions.visibilityOf(element3)));
 	}
@@ -148,10 +143,9 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void explicitlyWaitForEitherOfThese(WebElement element1ToBeVisible, WebElement element2ToHaveText,
-			String element2ExpectedText) throws IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
-				getIntConfigProperties("WaitForElementMaxTimeDuration"));
+	public void explicitlyWaitForEitherOfThese(WebDriver driver, WebElement element1ToBeVisible,
+			WebElement element2ToHaveText, String element2ExpectedText) throws IOException {
+		final WebDriverWait wait = new WebDriverWait(driver, getIntConfigProperties("WaitForElementMaxTimeDuration"));
 		wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOf(element1ToBeVisible),
 				ExpectedConditions.textToBePresentInElement(element2ToHaveText, element2ExpectedText)));
 	}
@@ -166,10 +160,9 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void explicitlyWaitForEitherOfThese(WebElement element1ToBeVisible, WebElement element2ToBeInVisible)
-			throws IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
-				getIntConfigProperties("WaitForElementMaxTimeDuration"));
+	public void explicitlyWaitForEitherOfThese(WebDriver driver, WebElement element1ToBeVisible,
+			WebElement element2ToBeInVisible) throws IOException {
+		final WebDriverWait wait = new WebDriverWait(driver, getIntConfigProperties("WaitForElementMaxTimeDuration"));
 		wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOf(element1ToBeVisible),
 				ExpectedConditions.invisibilityOf(element2ToBeInVisible)));
 	}
@@ -182,9 +175,8 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void explicitWaitForElementToBeClickable(WebElement element) throws IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
-				getIntConfigProperties("WaitForElementMaxTimeDuration"));
+	public void explicitWaitForElementToBeClickable(WebDriver driver, WebElement element) throws IOException {
+		final WebDriverWait wait = new WebDriverWait(driver, getIntConfigProperties("WaitForElementMaxTimeDuration"));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
@@ -196,9 +188,8 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void explicitWaitForElementToInvisible(WebElement element) throws IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
-				getIntConfigProperties("WaitForElementMaxTimeDuration"));
+	public void explicitWaitForElementToInvisible(WebDriver driver, WebElement element) throws IOException {
+		final WebDriverWait wait = new WebDriverWait(driver, getIntConfigProperties("WaitForElementMaxTimeDuration"));
 		wait.until(ExpectedConditions.invisibilityOfAllElements(element));
 	}
 
@@ -212,8 +203,8 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IOException
 	 */
-	public void waitForPrintToGenerate(WebElement element) throws InterruptedException, IOException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
+	public void waitForPrintToGenerate(WebDriver driver, WebElement element) throws InterruptedException, IOException {
+		final WebDriverWait wait = new WebDriverWait(driver,
 				getIntConfigProperties("waitForPrintToGenerateMaxTimeDuration"));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		Thread.sleep(2000);
@@ -226,8 +217,8 @@ public class PageBase extends WebDrivers {
 	 * @param elementAsWebelement
 	 *            elementAsWebelement
 	 */
-	public void clickOnElementByMovingCursorOnIt(WebElement elementAsWebelement) {
-		Actions act = new Actions(WebDrivers.getInstance());
+	public void clickOnElementByMovingCursorOnIt(WebDriver driver, WebElement elementAsWebelement) {
+		Actions act = new Actions(driver);
 		act.moveToElement(elementAsWebelement).click().build().perform();
 	}
 
@@ -589,8 +580,8 @@ public class PageBase extends WebDrivers {
 	 */
 	public void scrollElementIntoViewAndClick(WebElement element) throws IOException {
 		scrollElementIntoView(getInstance(), element);
-		explicitWaitForVisibilityOfElement(element);
-		explicitWaitForElementToBeClickable(element);
+		explicitWaitForVisibilityOfElement(getInstance(), element);
+		explicitWaitForElementToBeClickable(getInstance(), element);
 		element.click();
 	}
 
@@ -601,9 +592,9 @@ public class PageBase extends WebDrivers {
 	 *            - driver
 	 * @return
 	 */
-	public String[] getWindowshandles(WebDriver webdriver) {
-		WebDrivers.getInstance().switchTo().window(WebDrivers.ORIGINALHANDLE);
-		Set<String> handles = webdriver.getWindowHandles();
+	public String[] getWindowshandles(WebDriver driver) {
+		driver.switchTo().window(ORIGINALHANDLE);
+		Set<String> handles = getInstance().getWindowHandles();
 		Iterator<String> it = handles.iterator();
 		/*
 		 * iterate through your windows
@@ -638,7 +629,7 @@ public class PageBase extends WebDrivers {
 	 * @return
 	 */
 	public String windowsHandlerGetPopup(WebDriver webdriver, int windowNum) {
-		WebDrivers.getInstance().switchTo().window(WebDrivers.ORIGINALHANDLE);
+		getInstance().switchTo().window(ORIGINALHANDLE);
 
 		// Store your parent window
 		// String parentWindowHandler = webdriver.getWindowHandle();
@@ -673,15 +664,15 @@ public class PageBase extends WebDrivers {
 	 *            - driver
 	 */
 	public void closeAllPopupExceptMainPage(WebDriver webdriver) {
-		WebDrivers.getInstance().switchTo().window(WebDrivers.ORIGINALHANDLE);
+		getInstance().switchTo().window(ORIGINALHANDLE);
 		Set<String> handles = webdriver.getWindowHandles();
 		Iterator<String> it = handles.iterator();
 		while (it.hasNext()) {
 			String childwin = it.next();
-			if (!childwin.equals(WebDrivers.ORIGINALHANDLE)) {
-				WebDrivers.getInstance().switchTo().window(childwin);
-				WebDrivers.getInstance().close();
-				WebDrivers.getInstance().switchTo().window(WebDrivers.ORIGINALHANDLE);
+			if (!childwin.equals(ORIGINALHANDLE)) {
+				getInstance().switchTo().window(childwin);
+				getInstance().close();
+				getInstance().switchTo().window(ORIGINALHANDLE);
 			}
 		}
 	}
@@ -987,11 +978,11 @@ public class PageBase extends WebDrivers {
 	 * 
 	 * @return
 	 */
-	public String switchToAlertAndGetText() {
+	public String switchToAlertAndGetText(WebDriver driver) {
 		// using the try block here, since in some pages it is used to know if
 		// the alert exist then get the text from it
 		try {
-			Alert alert = WebDrivers.getInstance().switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			return alert.getText();
 		} catch (Exception e) {
 			return "";
@@ -1003,11 +994,11 @@ public class PageBase extends WebDrivers {
 	 * 
 	 * @return
 	 */
-	public void switchToAlertAndAccept() {
+	public void switchToAlertAndAccept(WebDriver driver) {
 		// using the try block here, since in some pages it is used to know if
 		// the alert exist then accept it
 		try {
-			Alert alert = WebDrivers.getInstance().switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			alert.accept();
 		} catch (Exception e) {
 			// do nothing
@@ -1019,11 +1010,11 @@ public class PageBase extends WebDrivers {
 	 * 
 	 * @return
 	 */
-	public void switchToAlertAndClose() {
+	public void switchToAlertAndClose(WebDriver driver) {
 		// using the try block here, since in some pages it is used to know if
 		// the alert exist then dismiss it
 		try {
-			Alert alert = WebDrivers.getInstance().switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			alert.dismiss();
 		} catch (Exception e) {
 			// do nothing
@@ -1038,8 +1029,8 @@ public class PageBase extends WebDrivers {
 	 * @throws InterruptedException
 	 *             InterruptedException
 	 */
-	public void waitForAlertToBePresent() throws IOException, InterruptedException {
-		final WebDriverWait wait = new WebDriverWait(WebDrivers.getInstance(),
+	public void waitForAlertToBePresent(WebDriver driver) throws IOException, InterruptedException {
+		final WebDriverWait wait = new WebDriverWait(driver,
 				getIntConfigProperties("waitTimeForTheSucessOrFailureAlert"));
 		wait.until(ExpectedConditions.alertIsPresent());
 		Thread.sleep(2000);
@@ -1110,7 +1101,7 @@ public class PageBase extends WebDrivers {
 		 * Check if Page is really Loaded
 		 */
 		try {
-			explicitWaitForVisibilityOfElement(getInstance().findElement(By.tagName("html")));
+			explicitWaitForVisibilityOfElement(getInstance(), getInstance().findElement(By.tagName("html")));
 		} catch (Exception e) {
 			waitUntilPageLoads();
 		}
@@ -1330,8 +1321,8 @@ public class PageBase extends WebDrivers {
 			/*
 			 * when browser is hidden mouse unexpectable condition is occuring
 			 */
-			if (!switchToAlertAndGetText().equals("")) {
-				switchToAlertAndClose();
+			if (!switchToAlertAndGetText(getInstance()).equals("")) {
+				switchToAlertAndClose(getInstance());
 				waitForAjaxToComplete();
 				element.sendKeys(Keys.ARROW_DOWN);
 				element.sendKeys(Keys.ENTER);
@@ -1373,13 +1364,13 @@ public class PageBase extends WebDrivers {
 		 * proceed, else throw exception
 		 */
 		try {
-			waitForAlertToBePresent();
-			if (switchToAlertAndGetText().toLowerCase().contains(successMessageInTheAlert.toLowerCase())) {
+			waitForAlertToBePresent(getInstance());
+			if (switchToAlertAndGetText(getInstance()).toLowerCase().contains(successMessageInTheAlert.toLowerCase())) {
 
 				/*
 				 * close the alert
 				 */
-				switchToAlertAndClose();
+				switchToAlertAndClose(getInstance());
 
 				/*
 				 * wait for the page to reload
@@ -1423,216 +1414,6 @@ public class PageBase extends WebDrivers {
 			System.out.println("thread exception catch");
 		}
 		((JavascriptExecutor) getInstance()).executeScript("arguments[0].blur();", element);
-	}
-
-	/**
-	 * * Send value to the element (only 1 webelement) and then save the form.
-	 * Reload the form and verify that it is saving. This will also do the
-	 * assertion <br>
-	 * Can be used <b>ONLY</b> for check boxes, radio buttons, text boxes & drop
-	 * downs.<br>
-	 * <b>Important for usage:</b> use elementType only as
-	 * <li>radio</li>
-	 * <li>checkbox</li>
-	 * <li>textbox</li>
-	 * <li>dropdown<b></b> - This is work only for selecting by visible
-	 * text</li>
-	 * <li>autofill</li> <br>
-	 * 
-	 * @param elementType
-	 *            elementType
-	 * @param elementWhereValueIsToBeSent
-	 *            ElementWhereValueIsToBeSent
-	 * @param valueToBeSent
-	 *            valueToBeSent
-	 * @param saveButtonAsWebelement
-	 *            SaveButtonAsWebelement
-	 * @param requiresManualReloadOfPage
-	 *            RequiresManualReloadOfPage
-	 * @param successMessageInTheAlert
-	 *            SuccessMessageInTheAlert
-	 */
-	public void sendValueToWebelementAndVerifyItsSavingBySavingTheForm(String elementType,
-			WebElement elementWhereValueIsToBeSent, String valueToBeSent, WebElement saveButtonAsWebelement,
-			Boolean requiresManualReloadOfPage, String successMessageInTheAlert) {
-
-		/*
-		 * create hashmap of the element type and add the value to it. Since it
-		 * can be used for only one element, the KEY=1
-		 */
-		HashMap<Integer, String> hashMapElementType = new HashMap<>();
-		hashMapElementType.put(1, elementType);
-
-		/*
-		 * create hashmap of the element type and add the value to it. Since it
-		 * can be used for only one element, the KEY=1
-		 */
-		HashMap<Integer, WebElement> hashMapElementWhereValueIsToBeSent = new HashMap<>();
-		hashMapElementWhereValueIsToBeSent.put(1, elementWhereValueIsToBeSent);
-
-		/*
-		 * create hashmap of the element type and add the value to it. Since it
-		 * can be used for only one element, the KEY=1
-		 */
-		HashMap<Integer, String> hashMapValueToBeSent = new HashMap<>();
-		hashMapValueToBeSent.put(1, valueToBeSent);
-
-		/*
-		 * call the save multiple webelement method
-		 */
-		sendValueToMultipleWebelementAndVerifyItsSavingBySavingTheForm(hashMapElementType,
-				hashMapElementWhereValueIsToBeSent, hashMapValueToBeSent, saveButtonAsWebelement,
-				requiresManualReloadOfPage, successMessageInTheAlert);
-	}
-
-	/**
-	 * Send value to multiple element (n number of elements) in form of hash map
-	 * and then save the form. Reload the form and verify that it is saving.
-	 * This will also do the assertion <br>
-	 * Can be used <b>ONLY</b> for check boxes, radio buttons, text boxes & drop
-	 * downs.<br>
-	 * <b>Important for usage:</b> use elementType hashmap only for
-	 * <li>radio</li>
-	 * <li>checkbox</li>
-	 * <li>textbox</li>
-	 * <li>dropdown<b></b> - This is work only for selecting by visible
-	 * text</li>
-	 * <li>autofill</li> <br>
-	 * <b>Usage: Make 100% sure that the KEY in all 3 hashmaps should be same
-	 * for the same element.</b> <br>
-	 * HashMap&ltInteger, String&gt elementType = new HashMap<>(); <br>
-	 * elementType.put(1, type);<br>
-	 * elementType.put(2, type);<br>
-	 * <br>
-	 * HashMap&ltInteger, WebElement&gt ElementWhereValueIsToBeSent = new
-	 * HashMap<>();<br>
-	 * ElementWhereValueIsToBeSent.put(1,The webelement); <br>
-	 * ElementWhereValueIsToBeSent.put(2,The webelement); <br>
-	 * <br>
-	 * HashMap&ltInteger, String&gt valueToBeSent = new HashMap<>();<br>
-	 * valueToBeSent.put(1, value); <br>
-	 * valueToBeSent.put(2, value);<br>
-	 * 
-	 * 
-	 * @param elementType
-	 *            elementType
-	 * @param elementWhereValueIsToBeSent
-	 *            ElementWhereValueIsToBeSent
-	 * @param valueToBeSent
-	 *            valueToBeSent
-	 * @param saveButtonAsWebelement
-	 *            SaveButtonAsWebelement
-	 * @param requiresManualReloadOfPage
-	 *            RequiresManualReloadOfPage
-	 * @param successMessageInTheAlert
-	 *            SuccessMessageInTheAlert
-	 */
-	public void sendValueToMultipleWebelementAndVerifyItsSavingBySavingTheForm(HashMap<Integer, String> elementType,
-			HashMap<Integer, WebElement> elementWhereValueIsToBeSent, HashMap<Integer, String> valueToBeSent,
-			WebElement saveButtonAsWebelement, Boolean requiresManualReloadOfPage, String successMessageInTheAlert) {
-
-		/*
-		 * create hashmap of the previous and current values
-		 */
-		HashMap<Integer, String> previousValue = new HashMap<>();
-		HashMap<Integer, String> currentValue = new HashMap<>();
-
-		/*
-		 * get the previous value of the element
-		 */
-		for (int i = (Collections.min(elementWhereValueIsToBeSent.keySet())); i <= (Collections
-				.max(elementWhereValueIsToBeSent.keySet())); i++) {
-
-			/*
-			 * scroll element into view
-			 */
-			scrollElementIntoView(getInstance(), elementWhereValueIsToBeSent.get(i));
-
-			switch (elementType.get(i)) {
-			case "radio":
-				previousValue.put(i, elementWhereValueIsToBeSent.get(i).getAttribute("checked"));
-				break;
-			case "checkbox":
-				previousValue.put(i, elementWhereValueIsToBeSent.get(i).getAttribute("checked"));
-				break;
-			case "textbox":
-				previousValue.put(i, elementWhereValueIsToBeSent.get(i).getAttribute("value"));
-				break;
-			case "dropdown":
-				previousValue.put(i, getSelectedValueFromDropdown(elementWhereValueIsToBeSent.get(i)));
-				break;
-			case "autofill":
-				previousValue.put(i, elementWhereValueIsToBeSent.get(i).getAttribute("value"));
-				break;
-			default:
-				break;
-			}
-
-			/*
-			 * send value to the element based on type of element
-			 */
-			switch (elementType.get(i)) {
-			case "radio":
-				elementWhereValueIsToBeSent.get(i).click();
-				break;
-			case "checkbox":
-				elementWhereValueIsToBeSent.get(i).click();
-				break;
-			case "textbox":
-				elementWhereValueIsToBeSent.get(i).clear();
-				elementWhereValueIsToBeSent.get(i).sendKeys(valueToBeSent.get(i));
-				doHtmlLBlurManuallyOnElement(elementWhereValueIsToBeSent.get(i));
-				break;
-			case "dropdown":
-				selectValueInDropDownByVisibleText(elementWhereValueIsToBeSent.get(i), valueToBeSent.get(i));
-				break;
-			case "autofill":
-				selectFromAutofillAndwaitForAjaxToComplete(elementWhereValueIsToBeSent.get(i), valueToBeSent.get(i));
-				break;
-			default:
-				break;
-			}
-		}
-
-		/*
-		 * save the page
-		 */
-		saveAndReloadThePage(saveButtonAsWebelement, requiresManualReloadOfPage, successMessageInTheAlert);
-
-		/*
-		 * get the current value of the element
-		 */
-		for (int i = (Collections.min(elementWhereValueIsToBeSent.keySet())); i <= (Collections
-				.max(elementWhereValueIsToBeSent.keySet())); i++) {
-			switch (elementType.get(i)) {
-			case "radio":
-				currentValue.put(i, elementWhereValueIsToBeSent.get(i).getAttribute("checked"));
-				break;
-			case "checkbox":
-				currentValue.put(i, elementWhereValueIsToBeSent.get(i).getAttribute("checked"));
-				break;
-			case "textbox":
-				currentValue.put(i, elementWhereValueIsToBeSent.get(i).getAttribute("value"));
-				break;
-			case "dropdown":
-				currentValue.put(i, getSelectedValueFromDropdown(elementWhereValueIsToBeSent.get(i)));
-				break;
-			case "autofill":
-				currentValue.put(i, elementWhereValueIsToBeSent.get(i).getAttribute("value"));
-				break;
-			default:
-				break;
-			}
-		}
-
-		/*
-		 * verify that the previous and the current value of the element is not
-		 * the same. If same, mark it as failed.
-		 */
-		for (int i = (Collections.min(elementWhereValueIsToBeSent.keySet())); i <= (Collections
-				.max(elementWhereValueIsToBeSent.keySet())); i++) {
-			Assert.assertNotEquals(currentValue.get(i), previousValue.get(i), "Element is not saving");
-		}
 	}
 
 	/**

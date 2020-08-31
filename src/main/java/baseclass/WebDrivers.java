@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class WebDrivers {
 
-	private static WebDriver driver;
+	private WebDriver driver;
 
 	/**
 	 * Default constructor.
@@ -18,7 +18,7 @@ public class WebDrivers {
 	 * @return
 	 */
 	protected WebDrivers() {
-		WebDrivers.getDriver();
+		getDriver();
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class WebDrivers {
 	 * 
 	 * @return
 	 */
-	private static WebDriver getDriver() {
+	private WebDriver getDriver() {
 		String defaultDownloadFolder = PageBase.getDefaultDownloadFolder();
 		String geckoDriverFolder = PageBase.getGeckoDriverPath();
 		if (driver == null) {
@@ -84,9 +84,9 @@ public class WebDrivers {
 	 * 
 	 * @return
 	 */
-	public static WebDriver getInstance() {
+	public WebDriver getInstance() {
 		if (driver == null) {
-			WebDrivers.getDriver();
+			getDriver();
 			return driver;
 		} else {
 			return driver;
@@ -99,12 +99,12 @@ public class WebDrivers {
 	 * @return
 	 */
 	public void closeDriver() {
-		WebDrivers.driver.quit();
+		driver.quit();
 	}
 
 	/**
 	 * final for getting the main page windowhandle.
 	 */
-	public static final String ORIGINALHANDLE = WebDrivers.getInstance().getWindowHandle();
+	public final String ORIGINALHANDLE = getInstance().getWindowHandle();
 
 }
