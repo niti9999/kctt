@@ -8,6 +8,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import constants.Constants;
+
 public class WebDrivers {
 
 	private WebDriver driver;
@@ -26,7 +28,7 @@ public class WebDrivers {
 	 * 
 	 * @return
 	 */
-	private WebDriver getDriver() {
+	private WebDriver InitiateDriver() {
 		String defaultDownloadFolder = PageBase.getDefaultDownloadFolder();
 		String geckoDriverFolder = PageBase.getGeckoDriverPath();
 		if (driver == null) {
@@ -40,7 +42,7 @@ public class WebDrivers {
 				dc.setBrowserName("firefox");
 				dc.setPlatform(Platform.WINDOWS);
 
-				System.setProperty("webdriver.gecko.driver", geckoDriverFolder);
+				System.setProperty("webdriver.gecko.driver", Constants.FIREFOX_DRIVER_PATH);
 				FirefoxOptions options = new FirefoxOptions();
 				options.addPreference("browser.download.folderList", 2);
 				options.addPreference("browser.download.dir", defaultDownloadFolder);
@@ -59,34 +61,25 @@ public class WebDrivers {
 				dc.setPlatform(Platform.WINDOWS);
 			}
 
+			// driver = new FirefoxDriver();
 			try {
-
 				driver = new RemoteWebDriver(new URL("http://192.168.2.92:4444/wd/hub"), dc);
 			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return driver;
 	}
 
-	// /**
-	// * sets the driver as null, so that it can be reused after the quit()
-	// method
-	// *
-	// * @param driver
-	// */
-	// public static void setDriverAsNULL(WebDriver driver) {
-	// WebDriverClass.driver = null;
-	// }
-
 	/**
 	 * Getting the instance of the driver.
 	 * 
 	 * @return
 	 */
-	public WebDriver getInstance() {
+	public WebDriver getDriver() {
 		if (driver == null) {
-			getDriver();
+			InitiateDriver();
 			return driver;
 		} else {
 			return driver;
@@ -101,10 +94,5 @@ public class WebDrivers {
 	public void closeDriver() {
 		driver.quit();
 	}
-
-	/**
-	 * final for getting the main page windowhandle.
-	 */
-	public final String ORIGINALHANDLE = getInstance().getWindowHandle();
 
 }
