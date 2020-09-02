@@ -57,6 +57,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import com.lowagie.text.Utilities;
 
+import constants.Constants;
+
 public class PageBase extends WebDrivers {
 
 	String host;
@@ -578,104 +580,104 @@ public class PageBase extends WebDrivers {
 	 * @throws IOException
 	 *             IO Exception
 	 */
-	public void scrollElementIntoViewAndClick(WebDriver driver,WebElement element) throws IOException {
-		scrollElementIntoView(getInstance(), element);
-		explicitWaitForVisibilityOfElement(getInstance(), element);
-		explicitWaitForElementToBeClickable(getInstance(), element);
+	public void scrollElementIntoViewAndClick(WebDriver driver, WebElement element) throws IOException {
+		scrollElementIntoView(getDriver(), element);
+		explicitWaitForVisibilityOfElement(getDriver(), element);
+		explicitWaitForElementToBeClickable(getDriver(), element);
 		element.click();
 	}
 
-	/**
-	 * gives the window handles (window ID).
-	 * 
-	 * @param webdriver
-	 *            - driver
-	 * @return
-	 */
-	public String[] getWindowshandles(WebDriver driver) {
-		driver.switchTo().window(ORIGINALHANDLE);
-		Set<String> handles = getInstance().getWindowHandles();
-		Iterator<String> it = handles.iterator();
-		/*
-		 * iterate through your windows
-		 */
-		String[] windowHandles = null;
-		while (it.hasNext()) {
-			windowHandles = new String[2];
-			windowHandles[0] = it.next();
-			windowHandles[1] = it.next();
-		}
-		return windowHandles;
-	}
+//	/**
+//	 * gives the window handles (window ID).
+//	 * 
+//	 * @param webdriver
+//	 *            - driver
+//	 * @return
+//	 */
+//	public String[] getWindowshandles(WebDriver driver) {
+//		driver.switchTo().window(ORIGINALHANDLE);
+//		Set<String> handles = getDriver().getWindowHandles();
+//		Iterator<String> it = handles.iterator();
+//		/*
+//		 * iterate through your windows
+//		 */
+//		String[] windowHandles = null;
+//		while (it.hasNext()) {
+//			windowHandles = new String[2];
+//			windowHandles[0] = it.next();
+//			windowHandles[1] = it.next();
+//		}
+//		return windowHandles;
+//	}
 
-	/**
-	 * fetches the last window opened.
-	 * 
-	 * @param webdriver
-	 *            - driver
-	 * @return
-	 */
-	public String windowsHandlerGetNewPopup(WebDriver webdriver) {
-		return windowsHandlerGetPopup(webdriver, 10000);
-	}
+//	/**
+//	 * fetches the last window opened.
+//	 * 
+//	 * @param webdriver
+//	 *            - driver
+//	 * @return
+//	 */
+//	public String windowsHandlerGetNewPopup(WebDriver webdriver) {
+//		return windowsHandlerGetPopup(webdriver, 10000);
+//	}
 
-	/**
-	 * fetches the pop up based on windowNum.
-	 * 
-	 * @param webdriver
-	 *            - driver
-	 * @param windowNum
-	 *            - windows number
-	 * @return
-	 */
-	public String windowsHandlerGetPopup(WebDriver webdriver, int windowNum) {
-		getInstance().switchTo().window(ORIGINALHANDLE);
+//	/**
+//	 * fetches the pop up based on windowNum.
+//	 * 
+//	 * @param webdriver
+//	 *            - driver
+//	 * @param windowNum
+//	 *            - windows number
+//	 * @return
+//	 */
+//	public String windowsHandlerGetPopup(WebDriver webdriver, int windowNum) {
+//		getDriver().switchTo().window(ORIGINALHANDLE);
+//
+//		// Store your parent window
+//		// String parentWindowHandler = webdriver.getWindowHandle();
+//
+//		String subWindowHandler = "";
+//		String subWindowHandlerTmp = "";
+//		int i = 0;
+//
+//		/*
+//		 * get all window handles
+//		 */
+//		Set<String> handles = webdriver.getWindowHandles();
+//		Iterator<String> iterator = handles.iterator();
+//		iterator = handles.iterator();
+//		while (iterator.hasNext()) {
+//			subWindowHandlerTmp = iterator.next();
+//			if (i == windowNum) {
+//				subWindowHandler = subWindowHandlerTmp;
+//			}
+//			i++;
+//		}
+//		if (subWindowHandler.equals("")) {
+//			subWindowHandler = subWindowHandlerTmp;
+//		}
+//		return subWindowHandler;
+//	}
 
-		// Store your parent window
-		// String parentWindowHandler = webdriver.getWindowHandle();
-
-		String subWindowHandler = "";
-		String subWindowHandlerTmp = "";
-		int i = 0;
-
-		/*
-		 * get all window handles
-		 */
-		Set<String> handles = webdriver.getWindowHandles();
-		Iterator<String> iterator = handles.iterator();
-		iterator = handles.iterator();
-		while (iterator.hasNext()) {
-			subWindowHandlerTmp = iterator.next();
-			if (i == windowNum) {
-				subWindowHandler = subWindowHandlerTmp;
-			}
-			i++;
-		}
-		if (subWindowHandler.equals("")) {
-			subWindowHandler = subWindowHandlerTmp;
-		}
-		return subWindowHandler;
-	}
-
-	/**
-	 * It will close all the current window, except main window.
-	 * 
-	 * @param webdriver
-	 *            - driver
-	 */
-	public void closeAllPopupExceptMainPage(WebDriver webdriver) {
-		getInstance().switchTo().window(ORIGINALHANDLE);
-		Set<String> handles = webdriver.getWindowHandles();
-		Iterator<String> it = handles.iterator();
-		while (it.hasNext()) {
-			String childwin = it.next();
-			if (!childwin.equals(ORIGINALHANDLE)) {
-				getInstance().switchTo().window(childwin);
-				getInstance().close();
-				getInstance().switchTo().window(ORIGINALHANDLE);
-			}
-		}
-	}
+//	/**
+//	 * It will close all the current window, except main window.
+//	 * 
+//	 * @param webdriver
+//	 *            - driver
+//	 */
+//	public void closeAllPopupExceptMainPage(WebDriver webdriver) {
+//		getDriver().switchTo().window(ORIGINALHANDLE);
+//		Set<String> handles = webdriver.getWindowHandles();
+//		Iterator<String> it = handles.iterator();
+//		while (it.hasNext()) {
+//			String childwin = it.next();
+//			if (!childwin.equals(ORIGINALHANDLE)) {
+//				getDriver().switchTo().window(childwin);
+//				getDriver().close();
+//				getDriver().switchTo().window(ORIGINALHANDLE);
+//			}
+//		}
+//	}
 
 	/**
 	 * select item in a dropdown by value.
@@ -736,145 +738,6 @@ public class PageBase extends WebDrivers {
 	 */
 	public int getMaxAllowableTimeForDownloadCompletion() throws IOException {
 		return getIntConfigProperties("waitForDownloadCompletionMaxTime");
-	}
-
-	/**
-	 * renames the files with the given name and extension in the repository.
-	 * folder
-	 * 
-	 * @throws IOException
-	 *             - IOException
-	 */
-	public void renameFileInRepoFolderSameAsDownloadFolderWithTimeStamp(String fileName, String extensionWithDot)
-			throws IOException {
-		renameFileInDestFolderSameAsSourceFolderWithTimeStamp(getDefaultDownloadFolder(),
-				getTestResultPrintExcelRepositoryFolder(),
-				// getConfigProperties("RepositoryFolder"),
-				fileName, extensionWithDot);
-
-	}
-
-	/**
-	 * gets the other files folder.
-	 * 
-	 */
-	public String getOtherMiscFileFolder() {
-		String otherMiscFileFolder = System.getProperty("user.dir") + "\\AllFolder\\OtherMiscFiles";
-		return otherMiscFileFolder;
-	}
-
-	/**
-	 * gets the default download folder for all the test result outputs.
-	 * 
-	 */
-	public static String getDefaultDownloadFolder() {
-		String defaultDownloadFolder = System.getProperty("user.dir") + "\\AllFolder\\DefaultDownloadFolder";
-		// getConfigProperties("DefaultDownloadFolder");
-		return defaultDownloadFolder;
-	}
-
-	/**
-	 * gets the default download folder for all the test result outputs.
-	 * 
-	 */
-	public static String getGeckoDriverPath() {
-		String defaultDownloadFolder = System.getProperty("user.dir") + "\\AllFolder\\GeckoDriver\\geckodriver.exe";
-		return defaultDownloadFolder;
-	}
-
-	/**
-	 * gets test result output folder.
-	 * 
-	 */
-	public String getTestResultOutputFolder() {
-		String testOutputFolder = System.getProperty("user.dir") + "\\AllFolder\\TestResultOutputFolder";
-		return testOutputFolder;
-	}
-
-	/**
-	 * gets the parent folder for all the test result outputs for hha.
-	 */
-	public String getTestResultOutputFolderForHha() {
-		String testOutputFolder = System.getProperty("user.dir") + "\\AllFolder\\TestResultOutputFolder";
-		return testOutputFolder;
-	}
-
-	/**
-	 * gets the backup folder.
-	 * 
-	 * @return get backup folder path in file format
-	 * @throws IOException
-	 *             I/O exception
-	 */
-	public File getTestResutltsBackupFolderFileFormat() throws IOException {
-		File getTestResutltsBackupFolderFile = new File(getConfigProperties("TestResutltsBackupFolder"));
-		return getTestResutltsBackupFolderFile;
-	}
-
-	/**
-	 * get the test case folder.
-	 * 
-	 * @return String path
-	 */
-	public String getTestCaseFolder() {
-		String testCaseFolder = System.getProperty("user.dir") + "\\AllFolder\\testCaseFolder\\";
-		return testCaseFolder;
-	}
-
-	/**
-	 * get the test result screenshot folder.
-	 * 
-	 * @return File
-	 */
-	public File getTestResultScreenshotFolder() {
-		String testOutputFolder = getTestResultOutputFolderForHha();
-		File directoryScreenshots = new File(testOutputFolder + "/Screenshots");
-		if (!directoryScreenshots.exists()) {
-			directoryScreenshots.mkdirs();
-		}
-		return directoryScreenshots;
-	}
-
-	/**
-	 * get the test result PDF folder.
-	 * 
-	 * @return file
-	 */
-	public File getTestResultPdfFolder() {
-		String testOutputFolder = getTestResultOutputFolderForHha();
-		File directoryPdf = new File(testOutputFolder + "/PDF Results - Dev");
-		if (!directoryPdf.exists()) {
-			directoryPdf.mkdirs();
-		}
-		return directoryPdf;
-	}
-
-	/**
-	 * get the test result print and excel folder.
-	 * 
-	 * @return file
-	 */
-	public File getTestResultPrintExcelRepositoryFolder() {
-		String testOutputFolder = getTestResultOutputFolderForHha();
-		File directoryPrintExcels = new File(testOutputFolder + "/Prints_Excels");
-		if (!directoryPrintExcels.exists()) {
-			directoryPrintExcels.mkdirs();
-		}
-		return directoryPrintExcels;
-	}
-
-	/**
-	 * create the folder test result in output folder.
-	 * 
-	 * @return file
-	 */
-	public File getTestResultTestResultRepositoryFolder() {
-		String testOutputFolder = getTestResultOutputFolderForHha();
-		File directoryPrintExcels = new File(testOutputFolder + "/Test Results");
-		if (!directoryPrintExcels.exists()) {
-			directoryPrintExcels.mkdirs();
-		}
-		return directoryPrintExcels;
 	}
 
 	/**
@@ -1044,7 +907,7 @@ public class PageBase extends WebDrivers {
 	 *            element
 	 */
 	public void clickUsingJavascripts(WebElement element) {
-		JavascriptExecutor js = (JavascriptExecutor) getInstance();
+		JavascriptExecutor js = (JavascriptExecutor) getDriver();
 		js.executeScript("arguments[0].click();", element);
 	}
 
@@ -1059,7 +922,7 @@ public class PageBase extends WebDrivers {
 	 */
 	public void checkIfDownloadCompletedBypolling() throws InterruptedException, IOException {
 		Thread.sleep(2000);
-		String defaultDownloadFolder = getDefaultDownloadFolder();
+		String defaultDownloadFolder = Constants.DOWNLOAD_FOLDER;
 		File dir = FileUtils.getFile(defaultDownloadFolder);
 		boolean filefound = false;
 		int count = 0;
@@ -1091,7 +954,7 @@ public class PageBase extends WebDrivers {
 	public void waitUntilPageLoads() throws Exception {
 		Boolean readyStateComplete = false;
 		while (!readyStateComplete) {
-			readyStateComplete = ((String) ((JavascriptExecutor) getInstance())
+			readyStateComplete = ((String) ((JavascriptExecutor) getDriver())
 					.executeScript("return document.readyState")).equals("complete");
 
 			/* wait for all ajax to complete */
@@ -1101,80 +964,13 @@ public class PageBase extends WebDrivers {
 		 * Check if Page is really Loaded
 		 */
 		try {
-			explicitWaitForVisibilityOfElement(getInstance(), getInstance().findElement(By.tagName("html")));
+			explicitWaitForVisibilityOfElement(getDriver(), getDriver().findElement(By.tagName("html")));
 		} catch (Exception e) {
 			waitUntilPageLoads();
 		}
 	}
 
-	/**
-	 * rewrite the content in the file else create a new file Usage:
-	 * writeTestResultToOutPutFolder("example.txt","this is my content");.
-	 * 
-	 * @throws IOException
-	 *             IOException
-	 * @throws Exception
-	 *             Exception
-	 */
-	public void writeTestResultTextFileToOutPutFolder(String fileName, String content) throws IOException {
-		File testOutputFolder = getTestResultTestResultRepositoryFolder();
-		PrintWriter out;
-		out = new PrintWriter(
-				new BufferedWriter(new FileWriter(testOutputFolder + "/" + sanitizeName(fileName) + ".txt", true)));
-		out.println(content);
-		out.println("");
-		out.close();
-	}
-
-	/**
-	 * write the content in the file else create a new file. <br>
-	 * <p>
-	 * <b>Usage:</b><br>
-	 * writeTestResultToOutPutFolder("example.txt",List&ltSting&gt content);.
-	 * </p>
-	 * 
-	 * @param fileName
-	 *            file Name of the output file
-	 * @param content
-	 *            content as List
-	 * @throws IOException
-	 *             IO Exception
-	 */
-	public void writeTestResultTextFileToOutPutFolder(String fileName, List<String> content) throws IOException {
-		File testOutputFolder = getTestResultTestResultRepositoryFolder();
-		PrintWriter out;
-		out = new PrintWriter(
-				new BufferedWriter(new FileWriter(testOutputFolder + "/" + sanitizeName(fileName) + ".txt", true)));
-		/*
-		 * write each item in the list to the file
-		 */
-		Iterator<String> itr = content.iterator();
-		while (itr.hasNext()) {
-			String contentText = itr.next().toString();
-			writeTestResultTextFileToOutPutFolder(fileName, contentText);
-		}
-		out.println("");
-		out.close();
-	}
-
-	/**
-	 * rewrite the content in the file else create a new file Usage:
-	 * writeTestResultToOutPutFolder("example.html","this is my content");.
-	 * 
-	 * @throws IOException
-	 *             IOException
-	 * @throws Exception
-	 *             Exception
-	 */
-	public void writeTestResultTextFileToOutPutFolder_html(String fileName, String content) throws IOException {
-		File testOutputFolder = getTestResultTestResultRepositoryFolder();
-		PrintWriter out;
-		out = new PrintWriter(
-				new BufferedWriter(new FileWriter(testOutputFolder + "/" + sanitizeName(fileName) + ".html", true)));
-		out.println(content);
-		out.println("");
-		out.close();
-	}
+	
 
 	/**
 	 * get the max wait time for ajax to complete. Max time will be read from
@@ -1201,7 +997,7 @@ public class PageBase extends WebDrivers {
 		Thread.sleep(1000);
 		while (true) {
 			try {
-				if ((Boolean) ((JavascriptExecutor) getInstance())
+				if ((Boolean) ((JavascriptExecutor) getDriver())
 						.executeScript("return window.jQuery != undefined && jQuery.active === 0")) {
 					break;
 				}
@@ -1274,7 +1070,7 @@ public class PageBase extends WebDrivers {
 			/*
 			 * input should be focused before click
 			 */
-			((JavascriptExecutor) getInstance()).executeScript("$('#" + id + "').focus();");
+			((JavascriptExecutor) getDriver()).executeScript("$('#" + id + "').focus();");
 
 			/*
 			 * input is clicked
@@ -1321,8 +1117,8 @@ public class PageBase extends WebDrivers {
 			/*
 			 * when browser is hidden mouse unexpectable condition is occuring
 			 */
-			if (!switchToAlertAndGetText(getInstance()).equals("")) {
-				switchToAlertAndClose(getInstance());
+			if (!switchToAlertAndGetText(getDriver()).equals("")) {
+				switchToAlertAndClose(getDriver());
 				waitForAjaxToComplete();
 				element.sendKeys(Keys.ARROW_DOWN);
 				element.sendKeys(Keys.ENTER);
@@ -1331,7 +1127,7 @@ public class PageBase extends WebDrivers {
 			/*
 			 * blur is not getting handled automatically
 			 */
-			((JavascriptExecutor) getInstance()).executeScript("$('#" + id + "').blur();");
+			((JavascriptExecutor) getDriver()).executeScript("$('#" + id + "').blur();");
 			/*
 			 * onblur admit will get called
 			 */
@@ -1364,13 +1160,13 @@ public class PageBase extends WebDrivers {
 		 * proceed, else throw exception
 		 */
 		try {
-			waitForAlertToBePresent(getInstance());
-			if (switchToAlertAndGetText(getInstance()).toLowerCase().contains(successMessageInTheAlert.toLowerCase())) {
+			waitForAlertToBePresent(getDriver());
+			if (switchToAlertAndGetText(getDriver()).toLowerCase().contains(successMessageInTheAlert.toLowerCase())) {
 
 				/*
 				 * close the alert
 				 */
-				switchToAlertAndClose(getInstance());
+				switchToAlertAndClose(getDriver());
 
 				/*
 				 * wait for the page to reload
@@ -1388,7 +1184,7 @@ public class PageBase extends WebDrivers {
 					 * refresh the page and wait for the page to load
 					 * successfully
 					 */
-					getInstance().navigate().refresh();
+					getDriver().navigate().refresh();
 					waitUntilPageLoads();
 					waitForAjaxToComplete();
 					Thread.sleep(2000);
@@ -1413,7 +1209,7 @@ public class PageBase extends WebDrivers {
 		} catch (InterruptedException e) {
 			System.out.println("thread exception catch");
 		}
-		((JavascriptExecutor) getInstance()).executeScript("arguments[0].blur();", element);
+		((JavascriptExecutor) getDriver()).executeScript("arguments[0].blur();", element);
 	}
 
 	/**
@@ -1773,82 +1569,6 @@ public class PageBase extends WebDrivers {
 		return rowArray;
 	}
 
-	/**
-	 * Get the test case data from either database or excel based on the value
-	 * fed in the "Test Case Master" excel.<br>
-	 * For database, the configuration should be done config file.<br>
-	 * For excel, the excel file should be available in the test case folder.
-	 * 
-	 * @param testCaseName
-	 *            TestCaseName
-	 * @return object
-	 * @throws Exception
-	 *             Exception
-	 */
-	public Object[][] getTestCaseData(String testCaseName, String sheetNameAsHHAID) {
-		String readDataFrom = null;
-		String excelOrProcedureName = null;
-		Object[][] returnObject = null;
-		String[][] retObj = null;
-		int rowNum = 0;
-
-		try {
-			/*
-			 * instance of the class
-			 */
-
-			/*
-			 * get the test case master folder and read the data as object
-			 */
-			String testCaseMasterExcelFilepath = getTestCaseFolder();
-			retObj = getEntireExcelSheetDataAsStringArray(testCaseMasterExcelFilepath + "\\" + "Test Case Master.xlsx",
-					"Test Case Master");
-
-			/*
-			 * get the row which matches the test case name and get all
-			 * corresponding row data
-			 */
-			for (int i = 0; i < retObj.length; i++) {
-				if (retObj[i][0].equals(testCaseName)) {
-					rowNum = i;
-					break;
-				}
-			}
-
-			/*
-			 * get the read from value
-			 */
-			readDataFrom = retObj[rowNum][1];
-
-			/*
-			 * get the excel or procedure name
-			 */
-			excelOrProcedureName = retObj[rowNum][2];
-
-			/*
-			 * if the read has to be made from excel, get the data
-			 */
-			if (readDataFrom.equals("Excel")) {
-				String excelFilepath = getTestCaseFolder();
-				returnObject = getEntireExcelSheetData(excelFilepath + "\\" + excelOrProcedureName, sheetNameAsHHAID);
-			} else if (readDataFrom.equals("Database")) {
-				/*
-				 * if the read has to be made from database, get the data
-				 */
-				DBconnections dbconn = new DBconnections();
-				HashMap<String, String> parameters = new HashMap<>();
-				parameters.put("hha", sheetNameAsHHAID);
-				returnObject = dbconn.readDataFromDatabaseUsingSp(excelOrProcedureName, parameters);
-			}
-
-		} catch (Exception e) {
-			System.out.println("Exception happened while reading the test case data" + e.toString());
-		}
-		/*
-		 * return the object
-		 */
-
-		return returnObject;
-	}
+	
 
 }

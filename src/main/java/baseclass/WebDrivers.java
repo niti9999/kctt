@@ -29,8 +29,7 @@ public class WebDrivers {
 	 * @return
 	 */
 	private WebDriver InitiateDriver() {
-		String defaultDownloadFolder = PageBase.getDefaultDownloadFolder();
-		String geckoDriverFolder = PageBase.getGeckoDriverPath();
+		//String defaultDownloadFolder = PageBase.getDefaultDownloadFolder();
 		if (driver == null) {
 
 			DesiredCapabilities dc = null;
@@ -45,7 +44,7 @@ public class WebDrivers {
 				System.setProperty("webdriver.gecko.driver", Constants.FIREFOX_DRIVER_PATH);
 				FirefoxOptions options = new FirefoxOptions();
 				options.addPreference("browser.download.folderList", 2);
-				options.addPreference("browser.download.dir", defaultDownloadFolder);
+			//	options.addPreference("browser.download.dir", defaultDownloadFolder);
 				options.addPreference("browser.download.useDownloadDir", true);
 				options.addPreference("browser.helperApps.neverAsk.saveToDisk",
 						"application/xml,application/pdf,application/xls, application/csv,"
