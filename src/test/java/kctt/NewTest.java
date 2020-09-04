@@ -6,15 +6,17 @@ import baseclass.Baseclass;
 import baseclass.WebDrivers;
 
 public class NewTest extends WebDrivers {
-	
-	Baseclass bc;
+
+	Baseclass bc = new Baseclass();
 
 	@Test(priority = 1, enabled = true)
 	public void verifyContactsPageLabelTest() {
+		String jsonString = "{\"stepNunber\":\"1\",\"actionType\":\"click\",\"action\":\"singleclick\",\"elementIdentifierType\":\"id\",\"elementIdentifier\":\"SALogIn_Txt_UserName\"}";
 
-		bc = new Baseclass();
-		getDriver().get("https://www.google.com");
-		
+		getDriver().get("https://www.kantimemedicare.net/Z1/UI/Common/Login.aspx");
+		bc.oActions(getDriver(), jsonString);
+		System.out.println(getDriver().getTitle());
+
 	}
 
 }
