@@ -11,7 +11,7 @@ public class NewTest extends WebDrivers {
 
 	@Test(priority = 1, enabled = true)
 	public void verifyContactsPageLabelTest() {
-		String jsonString = "{\"stepNunber\":\"1\",\"actionType\":\"click\",\"action\":\"singleclick\",\"elementIdentifierType\":\"id\",\"elementIdentifier\":\"SALogIn_Txt_UserName\"}";
+		String jsonString = bc.jsonParser("C:\\Users\\nitish\\Desktop\\API.json");
 
 		getDriver().get("https://www.kantimemedicare.net/Z1/UI/Common/Login.aspx");
 		bc.oActions(getDriver(), jsonString);
