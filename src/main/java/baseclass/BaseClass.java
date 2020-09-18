@@ -1,7 +1,11 @@
 package baseclass;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.not;
 import java.io.FileReader;
-
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -9,9 +13,20 @@ import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Baseclass {
 
+	WebDriver driver;
+	String WaitForElementMaxDurationSecond;
+
+	/**
+	 * JSON parser
+	 * 
+	 * @param jsonPath
+	 * @return
+	 */
 	public String jsonParser(String jsonPath) {
 		String json = null;
 		try {
@@ -33,22 +48,61 @@ public class Baseclass {
 		return json;
 	}
 
-	public void oActions(WebDriver driver, String jsonString) {
-		WebElement element = null;
-		Object obj1 = JSONValue.parse(jsonString);
-		JSONObject jsonObject = (JSONObject) obj1;
+	/**
+	 * Main action class for the selenium
+	 * 
+	 * @param driver
+	 * @param jsonString
+	 */
+	public void oActionsRequest(WebDriver driver, String jsonString) {
 
-		String actionType = (String) jsonObject.get("actionType");
-		String action = (String) jsonObject.get("action");
-		String elementIdentifierType = (String) jsonObject.get("elementIdentifierType");
-		String elementIdentifier = (String) jsonObject.get("elementIdentifier");
-		String elementproperties = (String) jsonObject.get("elementproperties");
+		this.driver = driver;
+		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonString);
+
+		String actionType = (String) jsonObject.get("ActionType");
+		String action = (String) jsonObject.get("Action");
+		String elementIdentifierType = (String) jsonObject.get("ElementIdentifierType");
+		String elementIdentifier = (String) jsonObject.get("ElementIdentifier");
+		String elementproperties = (String) jsonObject.get("Elementproperties");
+		this.WaitForElementMaxDurationSecond = (String) jsonObject.get("WaitForElementMaxDurationSecond");
 
 		System.out.println("actionType: " + actionType);
 		System.out.println("action: " + action);
 		System.out.println("elementIdentifierType: " + elementIdentifierType);
 		System.out.println("elementIdentifier: " + elementIdentifier);
 		System.out.println("elementproperties: " + elementproperties);
+
+		oActions(driver, actionType, action, elementIdentifierType, elementIdentifier, elementproperties);
+
+		/*
+		 * get the array items from json
+		 */
+		ArrayList<String> listdata = new ArrayList<String>();
+		JSONArray arrayData = (JSONArray) jsonObject.get("ActionSteps");
+		if (arrayData != null) {
+			for (int i = 0; i < arrayData.size(); i++) {
+				listdata.add(arrayData.get(i).toString());
+				System.out.println(arrayData.get(i));
+
+				JSONObject jsonArrayObject = (JSONObject) JSONValue.parse(arrayData.get(i).toString());
+
+				int aoStepNunber = ((Long) jsonArrayObject.get("StepNunber")).intValue();
+				String aoActionType = (String) jsonArrayObject.get("ActionType");
+				String aoAction = (String) jsonArrayObject.get("Action");
+				String aoElementIdentifierType = (String) jsonArrayObject.get("ElementIdentifierType");
+				String aoElementIdentifier = (String) jsonArrayObject.get("ElementIdentifier");
+				String aoElementproperties = (String) jsonArrayObject.get("Elementproperties");
+				oActions(driver, aoActionType, aoAction, aoElementIdentifierType, aoElementIdentifier,
+						aoElementproperties);
+			}
+		}
+
+	}
+
+	public void oActions(WebDriver driver, String actionType, String action, String elementIdentifierType,
+			String elementIdentifier, String elementproperties) {
+		WebElement element = null;
+		this.driver = driver;
 
 		// ELEMENT IDENTIFIER TYPE -> USED TO FIND ELEMENT USING BY
 		switch (elementIdentifierType) {
@@ -75,7 +129,9 @@ public class Baseclass {
 		// ACTION TYPES
 		switch (actionType) {
 
-		// CLICK
+		/*
+		 * CLICK
+		 */
 		case "click":
 			switch (action) {
 			case "singleClick":
@@ -84,9 +140,45 @@ public class Baseclass {
 			}
 			break;
 
-		// SEND TEXT
+		/*
+		 * SEND TEXT
+		 */
 		case "sendText":
 			element.sendKeys(elementproperties);
+			break;
+
+		/*
+		 * GET
+		 */
+		case "get":
+			driver.get(elementproperties);
+			break;
+
+		/*
+		 * WAIT
+		 */
+		case "wait":
+			WebDriverWait wait = new WebDriverWait(driver, Integer.parseInt(WaitForElementMaxDurationSecond));
+			switch (action) {
+
+			case "waitUntilElementTobeVisible":
+				wait.until(ExpectedConditions.visibilityOfAllElements(element));
+				break;
+
+			case "waitUntilElementToBeClickable":
+				wait.until(ExpectedConditions.elementToBeClickable(element));
+				break;
+
+			case "waitUntilTextToDisappear":
+				await().atMost(Integer.parseInt(WaitForElementMaxDurationSecond), SECONDS).pollInterval(1, SECONDS)
+						.until(element::getText, not(elementproperties));
+				break;
+
+			case "implicitlyWait":
+				driver.manage().timeouts().implicitlyWait(Integer.parseInt(WaitForElementMaxDurationSecond),
+						TimeUnit.SECONDS);
+				break;
+			}
 		}
 
 	}
