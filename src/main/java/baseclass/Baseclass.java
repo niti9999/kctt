@@ -18,35 +18,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Baseclass {
 
-	WebDriver driver;
-	String WaitForElementMaxDurationSecond;
-
-	/**
-	 * JSON parser
-	 * 
-	 * @param jsonPath
-	 * @return
-	 */
-	public String jsonParser(String jsonPath) {
-		String json = null;
-		try {
-			JSONParser parser = new JSONParser();
-			// Use JSONObject for simple JSON and JSONArray for array of JSON.
-			// path to the JSON file.
-			try {
-				JSONObject data = (JSONObject) parser.parse(new FileReader(jsonPath));
-				json = data.toJSONString();
-				System.out.println("jsonParser output: " + json);
-			} catch (Exception e) {
-				JSONArray data = (JSONArray) parser.parse(new FileReader(jsonPath));
-				json = data.toJSONString();
-				System.out.println("jsonParser output: " + json);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return json;
-	}
+	private WebDriver driver;
+	private String WaitForElementMaxDurationSecond;
 
 	/**
 	 * Main action class for the selenium
@@ -56,21 +29,28 @@ public class Baseclass {
 	 */
 	public void oActionsRequest(WebDriver driver, String jsonString) {
 
-		this.driver = driver;
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonString);
 
+		this.setDriver(driver);
 		String actionType = (String) jsonObject.get("ActionType");
 		String action = (String) jsonObject.get("Action");
 		String elementIdentifierType = (String) jsonObject.get("ElementIdentifierType");
 		String elementIdentifier = (String) jsonObject.get("ElementIdentifier");
 		String elementproperties = (String) jsonObject.get("Elementproperties");
-		this.WaitForElementMaxDurationSecond = (String) jsonObject.get("WaitForElementMaxDurationSecond");
+		String WaitForElementMaxDurationSecond = (String) jsonObject.get("WaitForElementMaxDurationSecond");
 
+		/*
+		 * ****************************************
+		 */
 		System.out.println("actionType: " + actionType);
 		System.out.println("action: " + action);
 		System.out.println("elementIdentifierType: " + elementIdentifierType);
 		System.out.println("elementIdentifier: " + elementIdentifier);
 		System.out.println("elementproperties: " + elementproperties);
+		System.out.println("WaitForElementMaxDurationSecond: " + WaitForElementMaxDurationSecond);
+		/*
+		 ******************************************* 
+		 */
 
 		oActions(driver, actionType, action, elementIdentifierType, elementIdentifier, elementproperties);
 
@@ -92,6 +72,21 @@ public class Baseclass {
 				String aoElementIdentifierType = (String) jsonArrayObject.get("ElementIdentifierType");
 				String aoElementIdentifier = (String) jsonArrayObject.get("ElementIdentifier");
 				String aoElementproperties = (String) jsonArrayObject.get("Elementproperties");
+
+				/*
+				 * ****************************************
+				 */
+				System.out.println("aoStepNunber: " + aoStepNunber);
+				System.out.println("aoActionType: " + aoActionType);
+				System.out.println("aoAction: " + aoAction);
+				System.out.println("aoElementIdentifierType: " + aoElementIdentifierType);
+				System.out.println("aoElementIdentifier: " + aoElementIdentifier);
+				System.out.println("aoElementproperties: " + aoElementproperties);
+
+				/*
+				 ******************************************* 
+				 */
+
 				oActions(driver, aoActionType, aoAction, aoElementIdentifierType, aoElementIdentifier,
 						aoElementproperties);
 			}
@@ -101,8 +96,9 @@ public class Baseclass {
 
 	public void oActions(WebDriver driver, String actionType, String action, String elementIdentifierType,
 			String elementIdentifier, String elementproperties) {
+
 		WebElement element = null;
-		this.driver = driver;
+		this.setDriver(driver);
 
 		// ELEMENT IDENTIFIER TYPE -> USED TO FIND ELEMENT USING BY
 		switch (elementIdentifierType) {
@@ -182,4 +178,47 @@ public class Baseclass {
 		}
 
 	}
+
+	/**
+	 * JSON parser
+	 * 
+	 * @param jsonPath
+	 * @return
+	 */
+	public String jsonParser(String jsonPath) {
+		String json = null;
+		try {
+			JSONParser parser = new JSONParser();
+			// Use JSONObject for simple JSON and JSONArray for array of JSON.
+			// path to the JSON file.
+			try {
+				JSONObject data = (JSONObject) parser.parse(new FileReader(jsonPath));
+				json = data.toJSONString();
+				System.out.println("jsonParser output: " + json);
+			} catch (Exception e) {
+				JSONArray data = (JSONArray) parser.parse(new FileReader(jsonPath));
+				json = data.toJSONString();
+				System.out.println("jsonParser output: " + json);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return json;
+	}
+
+	/**
+	 * @return the driver
+	 */
+	public WebDriver getDriver() {
+		return driver;
+	}
+
+	/**
+	 * @param driver
+	 *            the driver to set
+	 */
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
+	}
+
 }
