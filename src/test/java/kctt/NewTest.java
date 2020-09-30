@@ -11,14 +11,12 @@ public class NewTest extends WebDrivers {
 	Baseclass bc = new Baseclass();
 
 	@Test(priority = 1, enabled = true)
-	public void verifyContactsPageLabelTest() throws InterruptedException {
+	public void tests() throws InterruptedException {
 		String jsonString = bc.jsonParser("C:\\Users\\nitish\\Desktop\\API.json");
 
-		//getDriver().get("https://www.kantimemedicare.net/Z1/UI/Common/Login.aspx");
+		// getDriver().get("https://www.kantimemedicare.net/Z1/UI/Common/Login.aspx");
 		bc.oActionsRequest(getDriver(), jsonString);
 		Thread.sleep(10000);
 		System.out.println(getDriver().findElement(By.id("lblAppTitle")).getText());
-
 	}
-
 }
