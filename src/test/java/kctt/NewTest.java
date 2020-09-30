@@ -17,6 +17,6 @@ public class NewTest extends WebDrivers {
 		// getDriver().get("https://www.kantimemedicare.net/Z1/UI/Common/Login.aspx");
 		bc.oActionsRequest(getDriver(), jsonString);
 		Thread.sleep(10000);
-		System.out.println(getDriver().findElement(By.id("lblAppTitle")).getText());
+		System.out.println(getDriver().getTitle());
 	}
 }

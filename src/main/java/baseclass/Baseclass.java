@@ -38,7 +38,6 @@ public class Baseclass {
 		String elementIdentifier = (String) baseJsonObject.get("ElementIdentifier");
 		String elementproperties = (String) baseJsonObject.get("Elementproperties");
 		WaitForElementMaxDurationSecond = ((Long) baseJsonObject.get("WaitForElementMaxDurationSecond")).intValue();
-		;
 
 		oActions(driver, actionType, action, elementIdentifierType, elementIdentifier, elementproperties);
 
@@ -128,7 +127,7 @@ public class Baseclass {
 		/*
 		 * GET
 		 */
-		case "get":
+		case "openUrl":
 			driver.get(elementproperties);
 			break;
 
